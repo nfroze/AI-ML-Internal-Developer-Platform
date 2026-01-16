@@ -12,6 +12,8 @@ Backstage templates abstract away infrastructure complexity—developers select 
 
 ## Architecture
 
+![Cloud Architecture](screenshots/cloud-architecture.png)
+
 The platform spans two compute services within a shared VPC. EKS runs the developer-facing tools: Backstage serves as the unified portal, MLflow handles model registry and experiment tracking, and ArgoCD manages GitOps deployments. A custom GPU Cost Tracker service runs independently on ECS Fargate, providing real-time spend visibility and resource allocation APIs.
 
 Request flow starts at Backstage: a developer uses a software template to request GPU resources. The template triggers API calls to the Cost Tracker to verify budget availability, then allocates GPUs and registers the model in MLflow. ArgoCD detects the new application manifest and deploys the workload to the cluster. The Cost Tracker continuously aggregates spend data, surfacing it through a dashboard accessible to both developers and finance.
