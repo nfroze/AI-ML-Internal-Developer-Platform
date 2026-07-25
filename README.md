@@ -12,8 +12,6 @@ Everything is provisioned through Terraform and deployed via GitHub Actions. Arg
 
 ## Architecture
 
-![](screenshots/cloud-architecture.png)
-
 The system operates across two compute planes within a single VPC. Public subnets host the Application Load Balancer for the cost tracker, while all workloads run in private subnets behind a NAT gateway. EKS nodes host ArgoCD, Backstage, and MLflow in separate namespaces. The ECS Fargate task pulls its container image from ECR and sends logs to CloudWatch. Backstage templates communicate with both MLflow (for model registration) and the cost tracker (for budget checks and GPU allocation) via internal service endpoints. The ECS task role has read-only access to the EKS cluster, allowing the cost dashboard to surface cluster-level GPU metrics.
 
 ## Tech Stack
